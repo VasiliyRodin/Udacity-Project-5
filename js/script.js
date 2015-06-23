@@ -20,6 +20,11 @@ function loadData() {
     $body.append('<img class="bgimg" src="' + streetViewURL + '">');
 
     // YOUR CODE GOES HERE!
+    // getting NYT articles about the location
+
+    $.getJSON(URL, function (data) {
+        console.log(data);
+    });
 
     return false;
 };
