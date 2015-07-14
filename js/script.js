@@ -14,18 +14,20 @@ function loadData() {
 
     var stateStr = $('#state').val();
     var cityStr = $('#city').val();
-    
-    
+
+
     /*
      * Get yelp Info about tacos
      */
-    
-    
-    
-    
-    
-    
-    
+
+     
+
+
+
+
+
+
+
     /*
      var streetViewURL = 'http://maps.googleapis.com/maps/api/streetview?size=600x400&location=' + address + '';
      $body.append('<img class="bgimg" src="' + streetViewURL + '">');
