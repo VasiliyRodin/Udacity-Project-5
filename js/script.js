@@ -20,7 +20,39 @@ function loadData() {
      * Get yelp Info about tacos
      */
 
-     
+    function nonce_generate() {
+        return (Math.floor(Math.random() * 1e12).toString());
+    }
+    // Search for the top 10 highest rated tacos
+    var yelp_url = "http://api.yelp.com/v2/search?term=tacos&location=" + cityStr + ", " + stateStr + "&sort2&limit=10";
+
+    var parameters = {
+        oauth_consumer_key: "2oYHSfCHwQ6kkjBpcCL1fA",
+        oauth_token: "t6XJBkMTk06VK86Ef-BACPDJ-sXEngnj",
+        oauth_nonce: nonce_generate(),
+        oauth_timestamp: Math.floor(Date.now() / 1000),
+        oauth_signature_method: 'HMAC-SHA1',
+        oauth_version: '1.0',
+        callback: 'cb'
+    };
+    
+    var encodedSignature = oauthSignature.generate('GET',yelp_url, parameters,"9Oy6r-k0gjPU7xhX7XKr01rGv-8","7LHXDy-s0D7_CxJNeGY20Pd0HnQ")
+    parameters.oauth_signature = encodedSignature;
+    var settings = {
+        url: yelp_url,
+        data: parameters,
+        cache: true,
+        dataType: 'jsonp',
+        success: function(results) {
+            console.log(results);
+        },
+        error: function() {
+            //do stuff
+        }
+        
+    };
+    $.ajax(settings);
+
 
 
 
