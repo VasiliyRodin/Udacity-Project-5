@@ -3,8 +3,8 @@ function loadData() {
 
     var $body = $('body');
     var $wikiElem = $('#wikipedia-links');
-    var $nytHeaderElem = $('#nytimes-header');
-    var $nytElem = $('#nytimes-articles');
+    var $yelpElem = $('#yelp-header');
+    var $nytElem = $('#yelp-articles');
     var $greeting = $('#greeting');
 
     // clear out old data before new request
@@ -12,10 +12,15 @@ function loadData() {
     $nytElem.text("");
 
     // load streetview
-    var streetStr = $('#street').val();
+    var stateStr = $('#state').val();
     var cityStr = $('#city').val();
-    var address = streetStr + ', ' + cityStr;
+    /*
+     var streetViewURL = 'http://maps.googleapis.com/maps/api/streetview?size=600x400&location=' + address + '';
+     $body.append('<img class="bgimg" src="' + streetViewURL + '">');
+     */
+    // Getting Yelp Info about Tacos
 
+<<<<<<< HEAD
 
     var streetViewURL = 'http://maps.googleapis.com/maps/api/streetview?size=600x400&location=' + address + '';
     $body.append('<img class="bgimg" src="' + streetViewURL + '">');
@@ -36,6 +41,9 @@ function loadData() {
     }).error(function(){
         $nytHeaderElem.text('ERRRRRROOOOORRRR');
     });
+=======
+
+>>>>>>> origin/master
 
     var wikiRequestTimeOut = setTimeout(function(){
         $wikiElem.text("failed to get wikipedia resources");}, 8000
@@ -59,7 +67,8 @@ function loadData() {
 
 
     return false;
-};
+}
+;
 
 $('#form-container').submit(loadData);
 
