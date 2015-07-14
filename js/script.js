@@ -3,8 +3,8 @@ function loadData() {
 
     var $body = $('body');
     var $wikiElem = $('#wikipedia-links');
-    var $nytHeaderElem = $('#nytimes-header');
-    var $nytElem = $('#nytimes-articles');
+    var $yelpElem = $('#yelp-header');
+    var $nytElem = $('#yelp-articles');
     var $greeting = $('#greeting');
 
     // clear out old data before new request
@@ -12,22 +12,19 @@ function loadData() {
     $nytElem.text("");
 
     // load streetview
-    var streetStr = $('#street').val();
+    var stateStr = $('#state').val();
     var cityStr = $('#city').val();
-    var address = streetStr + ', ' + cityStr;
+    /*
+     var streetViewURL = 'http://maps.googleapis.com/maps/api/streetview?size=600x400&location=' + address + '';
+     $body.append('<img class="bgimg" src="' + streetViewURL + '">');
+     */
+    // Getting Yelp Info about Tacos
 
-    var streetViewURL = 'http://maps.googleapis.com/maps/api/streetview?size=600x400&location=' + address + '';
-    $body.append('<img class="bgimg" src="' + streetViewURL + '">');
 
-    // YOUR CODE GOES HERE!
-    // getting NYT articles about the location
-
-    $.getJSON(URL, function (data) {
-        console.log(data);
-    });
 
     return false;
-};
+}
+;
 
 $('#form-container').submit(loadData);
 
