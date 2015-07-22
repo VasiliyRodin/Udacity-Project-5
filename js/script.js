@@ -5,12 +5,12 @@ function loadData() {
      */
 
     var tacoPlaces = [
-        {name: " ", street: " ", city: " ", state: " "},
-        {name: " ", street: " ", city: " ", state: " "},
-        {name: " ", street: " ", city: " ", state: " "},
-        {name: " ", street: " ", city: " ", state: " "},
-        {name: " ", street: " ", city: " ", state: " "},
-        {name: " ", street: " ", city: " ", state: " "},
+        {name: "Tacos Negris", street: "37721 Niles Blvd", city: "Fremont", state: "CA"},
+        {name: "Tacos La Perla", street: "41080 Trimboli Way", city: "Fremont", state: "CA"},
+        {name: "Los Cabos", street: "3283 Walnut Ave", city: "Fremont", state: "CA"},
+        {name: "Casa De Meza", street: "4949 Stevenson Blvd", city: "Fremont", state: "CA"},
+        {name: "Tacos El Compadre", street: "4149 Peralta Blvd", city: "Fremont", state: "CA"},
+        {name: " Super Taco", street: "40798 Fremont Blvd", city: "Fremont", state: "CA"}
     ]
     var stateStr = $('#state').val();
     var cityStr = $('#city').val();
