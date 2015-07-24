@@ -1,20 +1,6 @@
-
 function loadData() {
-    /*
-     * List of Restaurants
-     */
 
-    var tacoPlaces = [
-        {name: "Tacos Negris", street: "37721 Niles Blvd", city: "Fremont", state: "CA"},
-        {name: "Tacos La Perla", street: "41080 Trimboli Way", city: "Fremont", state: "CA"},
-        {name: "Los Cabos", street: "3283 Walnut Ave", city: "Fremont", state: "CA"},
-        {name: "Casa De Meza", street: "4949 Stevenson Blvd", city: "Fremont", state: "CA"},
-        {name: "Tacos El Compadre", street: "4149 Peralta Blvd", city: "Fremont", state: "CA"},
-        {name: " Super Taco", street: "40798 Fremont Blvd", city: "Fremont", state: "CA"}
-    ]
-    var stateStr = $('#state').val();
-    var cityStr = $('#city').val();
-    var yelpAddress = stateStr + ", " + cityStr;
+    var yelpAddress = "Fremont, Ca";
 
 
     /*
@@ -56,6 +42,8 @@ function loadData() {
 
     };
     $.ajax(settings);
+
+
 
     /*
      var streetViewURL = 'http://maps.googleapis.com/maps/api/streetview?size=600x400&location=' + address + '';
@@ -114,7 +102,6 @@ function loadData() {
      }
      });
      */
-
     return false;
 }
 ;
@@ -122,3 +109,16 @@ function loadData() {
 $('#form-container').submit(loadData);
 
 // loadData();
+
+/*
+ * List of Restaurants
+ */
+
+
+/*
+ var $placesList = $('#places-list');
+ for (var i = 0; i < tacoPlaces.length; i++) {
+ var tacoPlace = tacoPlaces[i];
+ $placesList.append('<li class="locationName" >' + tacoPlace.name + '</li>');
+ }
+ */
