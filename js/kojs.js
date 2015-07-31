@@ -57,14 +57,15 @@ function initialize() {
     var map = new google.maps.Map(document.getElementById('map-canvas'),
             mapOptions);
 
-    for (tacoPlace in tacoPlaces) {
+    for (var i = 0; i < tacoPlaces.length; i++) {
+        var tacoPlace = tacoPlaces[i];
         var marker = new google.maps.Marker({
             position: new google.maps.LatLng(tacoPlace.lat, tacoPlace.long),
-            map: map
+            title: tacoPlace.name
         });
         marker.setMap(map);
     }
-
+    marker.setMap(map);
 }
 
 google.maps.event.addDomListener(window, 'load', initialize);
@@ -76,7 +77,6 @@ viewModel.tacoPlaces = ko.dependentObservable(function () {
     var search = this.query().toLowerCase();
     return ko.utils.arrayFilter(tacoPlaces, function (tacoPlace) {
         return tacoPlace.name.toLowerCase().indexOf(search) >= 0;
-        console.log("go away.");
     });
 }, viewModel);
 ko.applyBindings(viewModel);
