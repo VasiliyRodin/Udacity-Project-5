@@ -20,7 +20,7 @@
                 </div>
                 <div class="row">
                     <div class="col-md-12">
-                        <input placeholder="Search" type="search" data-bind="value: query, valueUpdate: 'keyup'" autocomplete="off">
+                        <input placeholder="Search…" type="search" name="q" data-bind="value: query, valueUpdate: 'keyup'" autocomplete="off" />
                     </div>
                 </div>
             </div>
@@ -32,12 +32,11 @@
                     <div class="col-md-5">
                         <div class="list-container">
                             <h3 id="list-header">Best Tacos</h3>
-                            <ul data-bind="template: {name:'tacoPlace', foreach:tacoPlaces}"></ul>
-                            <script type="text/html" id="tacoPlace">
+                            <ul data-bind="foreach: computedTacoPlaces">                           
                                 <li>
                                     <strong data-bind="text: name"></strong>
                                 </li>
-                            </script>
+                            </ul>
                         </div>
                     </div>
                     <div class="col-md-7">
