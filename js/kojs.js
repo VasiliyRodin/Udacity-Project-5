@@ -89,7 +89,7 @@ function ViewModel() {
     google.maps.event.addDomListener(window, 'load', initialize);
 
 
-    self.mapMarker = ko.observableArray(self.markerArray);
+
     self.computedTacoPlaces = ko.computed(function () {
         return ko.utils.arrayFilter(self.tacoPlace(), function (item) {
             var showItem = item.name.toLowerCase().indexOf(self.query().toLowerCase()) >= 0;
