@@ -67,10 +67,19 @@ function ViewModel() {
             center: {lat: 37.5483333, lng: -121.9875},
             zoom: 12,
         };
-        map = new google.maps.Map(document.getElementById('map-canvas'),
-                mapOptions);
+        map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+
+        // Info Window content
+        var contentString = '<div id="content">' +
+                '<h1>' + self.name + '</h1>' +
+                '</div>';
+
+        var infoWindow = new google.maps.InfoWindow({
+            content: contentString
+        });
 
         self.markerArray = [];
+        //Creates the marker.
         for (var i = 0; i < self.tacoPlace().length; i++) {
             tacoPlace = self.tacoPlace()[i];
             var marker = new google.maps.Marker({
@@ -84,12 +93,14 @@ function ViewModel() {
         for (var i = 0; i < self.markerArray.length; i++) {
             self.markerArray[i].setMap(map);
         }
-        console.log(self.markerArray)
+        //Shows the info window on click.
+        google.maps.event.addListener(marker, 'click', function () {
+            infoWindow.open(map, marker);
+        });
     }
     google.maps.event.addDomListener(window, 'load', initialize);
 
-
-
+// Compares what you typed in the search bar and shows you the results in the list and shows marker for the specific ones in the list.
     self.computedTacoPlaces = ko.computed(function () {
         return ko.utils.arrayFilter(self.tacoPlace(), function (item) {
             var showItem = item.name.toLowerCase().indexOf(self.query().toLowerCase()) >= 0;
