@@ -91,9 +91,11 @@ function ViewModel() {
         }
         //shows Marker and load the info window.
         for (var i = 0; i < self.markerArray.length; i++) {
-            google.maps.event.addListener(self.markerArray[i], 'click', (function(infoWindows) {
-                console.log("Clicked");
-                infoWindows.open(map, marker);
+            google.maps.event.addListener(self.markerArray[i], 'click', (function(infoWindows) {                
+                return function(){
+                    console.log("Clicked");
+                    infoWindows.open(map, self.markerArray[i]);
+                };                
             })(infoWindow));
             self.markerArray[i].setMap(map);
         }
