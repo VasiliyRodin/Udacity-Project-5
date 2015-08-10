@@ -84,7 +84,7 @@ function ViewModel() {
             tacoPlace = self.tacoPlace()[i];
             var marker = new google.maps.Marker({
                 position: new google.maps.LatLng(tacoPlace.lat, tacoPlace.long),
-                title: self.name
+                title: tacoPlace.name
             });
             self.markerArray.push(marker);
             tacoPlace.marker = marker;
@@ -94,8 +94,7 @@ function ViewModel() {
             self.markerArray[i].setMap(map);
         }
         //Shows the info window on click.
-        google.maps.event.addListener(marker, 'click', function () {
-            infoWindow.open(map, marker);
+        google.maps.event.addListener(marker, 'click', function () {infoWindow.open(map, marker);
         });
     }
     google.maps.event.addDomListener(window, 'load', initialize);
