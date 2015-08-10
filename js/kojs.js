@@ -71,7 +71,7 @@ function ViewModel() {
 
         // Info Window content
         var contentString = '<div id="content">' +
-                '<h1>' + self.tacoPlace.name + '</h1>' +
+                '<h1> TEST ETS TSET SET SET</h1>' +
                 '</div>';
 
         infoWindow = new google.maps.InfoWindow({
