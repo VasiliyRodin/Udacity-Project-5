@@ -1,5 +1,5 @@
 function ViewModel() {
-    self = this;
+    var self = this;
     self.query = ko.observable("");
     self.tacoPlaces = [
         {
@@ -71,10 +71,10 @@ function ViewModel() {
 
         // Info Window content
         var contentString = '<div id="content">' +
-                '<h1>' + self.name + '</h1>' +
+                '<h1>' + self.tacoPlace.name + '</h1>' +
                 '</div>';
 
-        var infoWindow = new google.maps.InfoWindow({
+        infoWindow = new google.maps.InfoWindow({
             content: contentString
         });
 
@@ -89,13 +89,15 @@ function ViewModel() {
             self.markerArray.push(marker);
             tacoPlace.marker = marker;
         }
-        //shows Marker
+        //shows Marker and load the info window.
         for (var i = 0; i < self.markerArray.length; i++) {
+            google.maps.event.addListener(self.markerArray[i], 'click', (function(infoWindows) {
+                console.log("Clicked");
+                infoWindows.open(map, marker);
+            })(infoWindow));
             self.markerArray[i].setMap(map);
         }
-        //Shows the info window on click.
-        google.maps.event.addListener(marker, 'click', function () {infoWindow.open(map, marker);
-        });
+
     }
     google.maps.event.addDomListener(window, 'load', initialize);
 
