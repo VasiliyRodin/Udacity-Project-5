@@ -68,11 +68,6 @@ function ViewModel() {
             zoom: 12,
         };
         map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-
-
-
-
-
         self.markerArray = [];
         //Creates the marker.
         for (var i = 0; i < self.tacoPlace().length; i++) {
