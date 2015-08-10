@@ -69,36 +69,40 @@ function ViewModel() {
         };
         map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
-        // Info Window content
-        var contentString = '<div id="content">' +
-                '<h1> TEST ETS TSET SET SET</h1>' +
-                '</div>';
 
-        infoWindow = new google.maps.InfoWindow({
-            content: contentString
-        });
+
+
 
         self.markerArray = [];
         //Creates the marker.
         for (var i = 0; i < self.tacoPlace().length; i++) {
-            tacoPlace = self.tacoPlace()[i];
+            var tacoPlace = self.tacoPlace()[i];
             var marker = new google.maps.Marker({
                 position: new google.maps.LatLng(tacoPlace.lat, tacoPlace.long),
                 title: tacoPlace.name
+            });
+
+            // Info Window content
+            var contentString = '<div id="content">' +
+                    '<h1> TEST ETS TSET SET SET</h1>' + tacoPlace.name +
+                    '</div>';
+
+            tacoPlace.infoWindow = new google.maps.InfoWindow({
+                content: contentString
             });
             self.markerArray.push(marker);
             tacoPlace.marker = marker;
         }
         //shows Marker and load the info window.
         for (var i = 0; i < self.markerArray.length; i++) {
-            google.maps.event.addListener(self.markerArray[i], 'click', (function(infoWindows) {                
-                return function(){
-                    console.log("Clicked");
-                    infoWindows.open(map, self.markerArray[i]);
-                };                
-            })(infoWindow));
             self.markerArray[i].setMap(map);
         }
+        self.tacoPlace().forEach(function (item) {
+            google.maps.event.addListener(item.marker, 'click', function() {
+                console.log("clicked");
+                item.infoWindow.open(map, item.marker);
+            });
+        });
 
     }
     google.maps.event.addDomListener(window, 'load', initialize);
