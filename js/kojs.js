@@ -141,7 +141,7 @@ var genrateContentString = function (restName, restCity) {
 
     var parameters = {
         oauth_consumer_key: consumerKey,
-        oauth_token: token ,
+        oauth_token: token,
         oauth_nonce: nonce_generate(),
         oauth_timestamp: Math.floor(Date.now() / 1000),
         oauth_signature_method: 'HMAC-SHA1',
@@ -150,7 +150,7 @@ var genrateContentString = function (restName, restCity) {
         term: restaurantName,
         location: restaurantCity,
         limit: 1
-        
+
     };
 
     var encodedSignature = oauthSignature.generate('GET', yelp_url, parameters, consumerKeySecret, tokenSecret);
@@ -163,12 +163,13 @@ var genrateContentString = function (restName, restCity) {
         dataType: 'jsonp',
         success: function (results) {
             console.log(results);
+            console.log(results.businesses[0].name);
         },
         error: function () {
+            console.log("doesnt work")
         }
     };
     $.ajax(settings);
-
 
 
 };
