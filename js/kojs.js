@@ -65,7 +65,7 @@ function ViewModel() {
     function initialize() {
         var mapOptions = {
             center: {lat: 37.5483333, lng: -121.9875},
-            zoom: 12,
+            zoom: 12
         };
         map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
         self.markerArray = [];
@@ -76,10 +76,11 @@ function ViewModel() {
                 position: new google.maps.LatLng(tacoPlace.lat, tacoPlace.long),
                 title: tacoPlace.name
             });
-
+            
             // Info Window content
-
-
+            tacoPlace.infoWindow = new google.maps.InfoWindow({
+                content: "generateContentString(tacoPlace.name, tacoPlace.city)"
+            });            
             self.markerArray.push(marker);
             tacoPlace.marker = marker;
         }
@@ -89,11 +90,8 @@ function ViewModel() {
         }
         self.tacoPlace().forEach(function (item) {
             google.maps.event.addListener(item.marker, 'click', function () {
-                item.infoWindow = new google.maps.InfoWindow({
-                    content: generateContentString(item.name, item.city)
-                });
                 item.infoWindow.open(map, item.marker);
-
+                generateContentString(item.name, item.city);
             });
         });
     }
@@ -124,8 +122,8 @@ var generateContentString = function (restName, restCity) {
     var restaurantCity = restCity;
 
     var consumerKey = "2oYHSfCHwQ6kkjBpcCL1fA";
-    var consumerKeySecret = "9Oy6r-k0gjPU7xhX7XKr01rGv-8"
-    var token = "BfJfpUb91qbdylAQsd3I1_YNpztoxwFs"
+    var consumerKeySecret = "9Oy6r-k0gjPU7xhX7XKr01rGv-8";
+    var token = "BfJfpUb91qbdylAQsd3I1_YNpztoxwFs";
     var tokenSecret = "nQAgIPhyzkVVG7XfnE05waNiNE8";
 
     /*
@@ -163,13 +161,13 @@ var generateContentString = function (restName, restCity) {
         success: function (results) {
             console.log(results);
             console.log(results.businesses[0].name);
-            var string = '<div id="content">' +
-                    '<h1>' + results.businesses[0].name + '</h1>' +
+            var contentString = '<div id="content">'+
+                    '<h1>asdasdasdasdasdasdsad</h1>'+
                     '</div>';
-            return string;
+            return contentString;
         },
         error: function () {
-            console.log("doesnt work")
+            console.log("doesnt work");
         }
     };
     $.ajax(settings);
