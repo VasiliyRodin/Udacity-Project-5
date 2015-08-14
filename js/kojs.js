@@ -124,6 +124,11 @@ var genrateContentString = function (restName, restCity) {
     var restaurantName = restName;
     var restaurantCity = restCity;
 
+    var consumerKey = "2oYHSfCHwQ6kkjBpcCL1fA";
+    var consumerKeySecret = "9Oy6r-k0gjPU7xhX7XKr01rGv-8"
+    var token = "BfJfpUb91qbdylAQsd3I1_YNpztoxwFs"
+    var tokenSecret = "nQAgIPhyzkVVG7XfnE05waNiNE8";
+
     /*
      * Get yelp Info about tacos
      */
@@ -132,19 +137,23 @@ var genrateContentString = function (restName, restCity) {
         return (Math.floor(Math.random() * 1e12).toString());
     }
 
-    var yelp_url = "http://api.yelp.com/v2/search/?term=" + restaurantName + "&location= " + restaurantCity + "&limit=1";
+    var yelp_url = "http://api.yelp.com/v2/search/";
 
     var parameters = {
-        oauth_consumer_key: "2oYHSfCHwQ6kkjBpcCL1fA",
-        oauth_token: "BfJfpUb91qbdylAQsd3I1_YNpztoxwFs",
+        oauth_consumer_key: consumerKey,
+        oauth_token: token ,
         oauth_nonce: nonce_generate(),
         oauth_timestamp: Math.floor(Date.now() / 1000),
         oauth_signature_method: 'HMAC-SHA1',
         oauth_version: '1.0',
-        callback: 'cb'
+        callback: 'cb',
+        term: restaurantName,
+        location: restaurantCity,
+        limit: 1
+        
     };
 
-    var encodedSignature = oauthSignature.generate('GET', yelp_url, parameters, "9Oy6r-k0gjPU7xhX7XKr01rGv-8", "nQAgIPhyzkVVG7XfnE05waNiNE8");
+    var encodedSignature = oauthSignature.generate('GET', yelp_url, parameters, consumerKeySecret, tokenSecret);
     parameters.oauth_signature = encodedSignature;
 
     var settings = {
@@ -156,14 +165,10 @@ var genrateContentString = function (restName, restCity) {
             console.log(results);
         },
         error: function () {
-            console.log("It all failed");
         }
     };
     $.ajax(settings);
 
-    var contentString = '<div id="content">' +
-            '<h1>' + restaurantName + '</h1>'
-    '</div>';
 
 
 };
