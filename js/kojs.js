@@ -142,7 +142,7 @@ var genrateContentString = function (restName, restCity) {
         oauth_timestamp: Math.floor(Date.now() / 1000),
         oauth_signature_method: 'HMAC-SHA1',
         oauth_version: '1.0',
-        callback: 'cb'              // This is crucial to include for jsonp implementation in AJAX or else the oauth-signature will be wrong.
+        callback: 'cb'              
     };
 
     var encodedSignature = oauthSignature.generate('GET', yelp_url, parameters, "9Oy6r-k0gjPU7xhX7XKr01rGv-8", "nQAgIPhyzkVVG7XfnE05waNiNE8");
@@ -151,17 +151,15 @@ var genrateContentString = function (restName, restCity) {
     var settings = {
         url: yelp_url,
         data: parameters,
-        cache: true, // This is crucial to include as well to prevent jQuery from adding on a cache-buster parameter "_=23489489749837", invalidating our oauth-signature
+        cache: true,
         dataType: 'jsonp',
         success: function (results) {
             console.log(results);
         },
         error: function () {
-            // Do stuff on fail
+            console.log("It all failed");
         }
     };
-
-    // Send AJAX query via jQuery library.
     $.ajax(settings);
 
     var contentString = '<div id="content">' +
