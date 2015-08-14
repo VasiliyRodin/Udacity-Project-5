@@ -92,7 +92,6 @@ function ViewModel() {
         }
         self.tacoPlace().forEach(function (item) {
             google.maps.event.addListener(item.marker, 'click', function () {
-                console.log("clicked");
                 item.infoWindow.open(map, item.marker);
                 genrateContentString(tacoPlace.name, tacoPlace.city);
             });
@@ -133,7 +132,7 @@ var genrateContentString = function (restName, restCity) {
         return (Math.floor(Math.random() * 1e12).toString());
     }
 
-    var yelp_url = "http://api.yelp.com/v2/search/?term=Los Cabos&location=Fremont&limit=1";
+    var yelp_url = "http://api.yelp.com/v2/search/?term=" + restaurantName + "&location= " + restaurantCity + "&limit=1";
 
     var parameters = {
         oauth_consumer_key: "2oYHSfCHwQ6kkjBpcCL1fA",
@@ -142,7 +141,7 @@ var genrateContentString = function (restName, restCity) {
         oauth_timestamp: Math.floor(Date.now() / 1000),
         oauth_signature_method: 'HMAC-SHA1',
         oauth_version: '1.0',
-        callback: 'cb'              
+        callback: 'cb'
     };
 
     var encodedSignature = oauthSignature.generate('GET', yelp_url, parameters, "9Oy6r-k0gjPU7xhX7XKr01rGv-8", "nQAgIPhyzkVVG7XfnE05waNiNE8");
@@ -166,7 +165,6 @@ var genrateContentString = function (restName, restCity) {
             '<h1>' + restaurantName + '</h1>'
     '</div>';
 
-    return contentString;
 
 };
 
