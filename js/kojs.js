@@ -78,11 +78,8 @@ function ViewModel() {
             });
 
             // Info Window content
-            var contentString = genrateContentString;
 
-            tacoPlace.infoWindow = new google.maps.InfoWindow({
-                content: contentString
-            });
+
             self.markerArray.push(marker);
             tacoPlace.marker = marker;
         }
@@ -92,11 +89,13 @@ function ViewModel() {
         }
         self.tacoPlace().forEach(function (item) {
             google.maps.event.addListener(item.marker, 'click', function () {
+                item.infoWindow = new google.maps.InfoWindow({
+                    content: generateContentString(item.name, item.city)
+                });
                 item.infoWindow.open(map, item.marker);
-                genrateContentString(tacoPlace.name, tacoPlace.city);
+
             });
         });
-
     }
     google.maps.event.addDomListener(window, 'load', initialize);
 
@@ -120,7 +119,7 @@ ko.applyBindings(new ViewModel());
 
 
 //generates the content for the info window using yelp API.
-var genrateContentString = function (restName, restCity) {
+var generateContentString = function (restName, restCity) {
     var restaurantName = restName;
     var restaurantCity = restCity;
 
@@ -164,12 +163,18 @@ var genrateContentString = function (restName, restCity) {
         success: function (results) {
             console.log(results);
             console.log(results.businesses[0].name);
+            var string = '<div id="content">' +
+                    '<h1>' + results.businesses[0].name + '</h1>' +
+                    '</div>';
+            return string;
         },
         error: function () {
             console.log("doesnt work")
         }
     };
     $.ajax(settings);
+
+
 
 
 };
