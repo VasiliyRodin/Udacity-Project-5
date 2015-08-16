@@ -34,7 +34,7 @@
                             <h3 id="list-header">Best Tacos</h3>
                             <ul data-bind="foreach: computedTacoPlaces">                           
                                 <li>
-                                    <strong data-bind="text: name"></strong>
+                                    <strong  data-bind="text: name, click: $parent.animateMarker"></strong>
                                 </li>
                             </ul>
                         </div>

@@ -59,9 +59,16 @@ function ViewModel() {
     ];
 
     //GoogleMaps API
-
     var map;
     self.tacoPlace = ko.observableArray(self.tacoPlaces);
+	self.animateMarker = function(item){
+		if (item.marker.getAnimation() !== null) {
+    item.marker.setAnimation(null);
+  } else {
+    item.marker.setAnimation(google.maps.Animation.BOUNCE);
+  }
+
+	}
     function initialize() {
         var mapOptions = {
             center: {lat: 37.5483333, lng: -121.9875},
@@ -79,8 +86,10 @@ function ViewModel() {
             
             // Info Window content
             tacoPlace.infoWindow = new google.maps.InfoWindow({
-                content: "generateContentString(tacoPlace.name, tacoPlace.city)"
-            });            
+                content: content
+            });
+			
+			var content = ""
             self.markerArray.push(marker);
             tacoPlace.marker = marker;
         }
@@ -88,10 +97,11 @@ function ViewModel() {
         for (var i = 0; i < self.markerArray.length; i++) {
             self.markerArray[i].setMap(map);
         }
+		//Adds onClick listener for each marker. 
         self.tacoPlace().forEach(function (item) {
             google.maps.event.addListener(item.marker, 'click', function () {
-                item.infoWindow.open(map, item.marker);
-                generateContentString(item.name, item.city);
+				//Sends each item to generateContentString with all its info
+                generateContentString(item, map);
             });
         });
     }
@@ -117,9 +127,9 @@ ko.applyBindings(new ViewModel());
 
 
 //generates the content for the info window using yelp API.
-var generateContentString = function (restName, restCity) {
-    var restaurantName = restName;
-    var restaurantCity = restCity;
+var generateContentString = function (item, map) {
+    var restaurantName = item.name;
+    var restaurantCity = item.city;
 
     var consumerKey = "2oYHSfCHwQ6kkjBpcCL1fA";
     var consumerKeySecret = "9Oy6r-k0gjPU7xhX7XKr01rGv-8";
@@ -162,19 +172,16 @@ var generateContentString = function (restName, restCity) {
             console.log(results);
             console.log(results.businesses[0].name);
             var contentString = '<div id="content">'+
-                    '<h1>asdasdasdasdasdasdsad</h1>'+
+                    '<h1>'+ results.businesses[0].name +'</h1>'+
                     '</div>';
-            return contentString;
+            item.infoWindow.setContent(contentString);
+			item.infoWindow.open(map, item.marker);
         },
         error: function () {
             console.log("doesnt work");
         }
     };
     $.ajax(settings);
-
-
-
-
 };
 
 
