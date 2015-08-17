@@ -171,6 +171,7 @@ var generateContentString = function (item, map) {
                     '<h1>' + results.businesses[0].name + '</h1>' +
                     '<h3> Rating: <img src="' + results.businesses[0].rating_img_url + '"</h3>' +
                     '<h3> Phone: ' + results.businesses[0].phone + '</h3>' +
+                    '<h3> Address: ' + results.businesses[0].location.display_address + '</h3>' +
                     '</div>';
             item.infoWindow.setContent(contentString);
             item.infoWindow.open(map, item.marker);
