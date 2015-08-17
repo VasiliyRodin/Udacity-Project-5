@@ -57,18 +57,18 @@ function ViewModel() {
             marker: null
         }
     ];
-
+    
     //GoogleMaps API
     var map;
     self.tacoPlace = ko.observableArray(self.tacoPlaces);
-	self.animateMarker = function(item){
-		if (item.marker.getAnimation() !== null) {
-    item.marker.setAnimation(null);
-  } else {
-    item.marker.setAnimation(google.maps.Animation.BOUNCE);
-  }
-
-	}
+    //animates marker when clicked from the list
+    self.animateMarker = function (item) {
+        if (item.marker.getAnimation() !== null) {
+            item.marker.setAnimation(null);
+        } else {
+            item.marker.setAnimation(google.maps.Animation.BOUNCE);
+        }
+    };
     function initialize() {
         var mapOptions = {
             center: {lat: 37.5483333, lng: -121.9875},
@@ -83,13 +83,11 @@ function ViewModel() {
                 position: new google.maps.LatLng(tacoPlace.lat, tacoPlace.long),
                 title: tacoPlace.name
             });
-            
-            // Info Window content
+            // Create Window content
             tacoPlace.infoWindow = new google.maps.InfoWindow({
                 content: content
             });
-			
-			var content = ""
+            var content = "";
             self.markerArray.push(marker);
             tacoPlace.marker = marker;
         }
@@ -97,10 +95,10 @@ function ViewModel() {
         for (var i = 0; i < self.markerArray.length; i++) {
             self.markerArray[i].setMap(map);
         }
-		//Adds onClick listener for each marker. 
+        //Adds onClick listener for each marker. 
         self.tacoPlace().forEach(function (item) {
             google.maps.event.addListener(item.marker, 'click', function () {
-				//Sends each item to generateContentString with all its info
+                //Sends each item(tacoPlace) to generateContentString with all its info
                 generateContentString(item, map);
             });
         });
@@ -121,7 +119,6 @@ function ViewModel() {
             return showItem;
         });
     });
-
 }
 ko.applyBindings(new ViewModel());
 
@@ -139,7 +136,6 @@ var generateContentString = function (item, map) {
     /*
      * Get yelp Info about tacos
      */
-
     function nonce_generate() {
         return (Math.floor(Math.random() * 1e12).toString());
     }
@@ -171,11 +167,13 @@ var generateContentString = function (item, map) {
         success: function (results) {
             console.log(results);
             console.log(results.businesses[0].name);
-            var contentString = '<div id="content">'+
-                    '<h1>'+ results.businesses[0].name +'</h1>'+
+            var contentString = '<div id="content">' +
+                    '<h1>' + results.businesses[0].name + '</h1>' +
+                    '<h3> Rating: <img src="' + results.businesses[0].rating_img_url + '"</h3>' +
+                    '<h3> Phone: ' + results.businesses[0].phone + '</h3>' +
                     '</div>';
             item.infoWindow.setContent(contentString);
-			item.infoWindow.open(map, item.marker);
+            item.infoWindow.open(map, item.marker);
         },
         error: function () {
             console.log("doesnt work");
