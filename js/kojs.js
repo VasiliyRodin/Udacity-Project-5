@@ -61,12 +61,13 @@ function ViewModel() {
     //GoogleMaps API
     var map;
     self.tacoPlace = ko.observableArray(self.tacoPlaces);
-    //animates marker when clicked from the list
+    //animates marker and launches the infoWindow when clicked from the list
     self.animateMarker = function (item) {
         if (item.marker.getAnimation() !== null) {
             item.marker.setAnimation(null);
         } else {
             item.marker.setAnimation(google.maps.Animation.BOUNCE);
+            generateContentString(item, map);
         }
     };
     function initialize() {
@@ -77,7 +78,8 @@ function ViewModel() {
         map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
         self.markerArray = [];
         //Creates the marker.
-        for (var i = 0; i < self.tacoPlace().length; i++) {
+        var tacoPlaceLength = self.tacoPlace().length;
+        for (var i = 0; i < tacoPlaceLength; i++) {
             var tacoPlace = self.tacoPlace()[i];
             var marker = new google.maps.Marker({
                 position: new google.maps.LatLng(tacoPlace.lat, tacoPlace.long),
@@ -165,8 +167,6 @@ var generateContentString = function (item, map) {
         cache: true,
         dataType: 'jsonp',
         success: function (results) {
-            console.log(results);
-            console.log(results.businesses[0].name);
             var contentString = '<div id="content">' +
                     '<h1>' + results.businesses[0].name + '</h1>' +
                     '<h3> Rating: <img src="' + results.businesses[0].rating_img_url + '"</h3>' +
@@ -182,11 +182,3 @@ var generateContentString = function (item, map) {
     };
     $.ajax(settings);
 };
-
-
-
-
-
-
-
-
