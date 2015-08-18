@@ -1,3 +1,8 @@
+/*
+ *  Vasiliy Rodin
+ *  Project 5 
+ */
+
 function ViewModel() {
     var self = this;
     self.query = ko.observable("");
@@ -58,7 +63,6 @@ function ViewModel() {
         }
     ];
     
-    //GoogleMaps API
     var map;
     self.tacoPlace = ko.observableArray(self.tacoPlaces);
     //animates marker and launches the infoWindow when clicked from the list
@@ -70,6 +74,9 @@ function ViewModel() {
             generateContentString(item, map);
         }
     };
+    /*
+     * Google map API initialize.
+     */
     function initialize() {
         var mapOptions = {
             center: {lat: 37.5483333, lng: -121.9875},
@@ -77,7 +84,7 @@ function ViewModel() {
         };
         map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
         self.markerArray = [];
-        //Creates the marker.
+        //Creates the marker for each item in the tacoPlace() array.
         var tacoPlaceLength = self.tacoPlace().length;
         for (var i = 0; i < tacoPlaceLength; i++) {
             var tacoPlace = self.tacoPlace()[i];
@@ -85,15 +92,16 @@ function ViewModel() {
                 position: new google.maps.LatLng(tacoPlace.lat, tacoPlace.long),
                 title: tacoPlace.name
             });
-            // Create Window content
+            // Declares the info window for each taco place.
             tacoPlace.infoWindow = new google.maps.InfoWindow({
                 content: content
             });
             var content = "";
+            //Each marker is placed into array for later use.
             self.markerArray.push(marker);
             tacoPlace.marker = marker;
         }
-        //shows Marker and load the info window.
+        //Goes through the marker array and it shows on the map.
         for (var i = 0; i < self.markerArray.length; i++) {
             self.markerArray[i].setMap(map);
         }
@@ -136,7 +144,7 @@ var generateContentString = function (item, map) {
     var tokenSecret = "nQAgIPhyzkVVG7XfnE05waNiNE8";
 
     /*
-     * Get yelp Info about tacos
+     * Get yelp Info about taco places
      */
     function nonce_generate() {
         return (Math.floor(Math.random() * 1e12).toString());
@@ -167,6 +175,7 @@ var generateContentString = function (item, map) {
         cache: true,
         dataType: 'jsonp',
         success: function (results) {
+            // Creates the content string that is then returned to the info window.
             var contentString = '<div id="content">' +
                     '<h1>' + results.businesses[0].name + '</h1>' +
                     '<h3> Rating: <img src="' + results.businesses[0].rating_img_url + '"</h3>' +
