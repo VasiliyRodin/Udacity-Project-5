@@ -2,7 +2,10 @@
  *  Vasiliy Rodin
  *  Project 5 
  */
-
+// Declares the info window globaly.
+infoWindow = new google.maps.InfoWindow({
+    content: ""
+});
 function ViewModel() {
     var self = this;
     self.query = ko.observable("");
@@ -62,17 +65,16 @@ function ViewModel() {
             marker: null
         }
     ];
-    
+
     var map;
     self.tacoPlace = ko.observableArray(self.tacoPlaces);
     //animates marker and launches the infoWindow when clicked from the list
     self.animateMarker = function (item) {
-        if (item.marker.getAnimation() !== null) {
+        item.marker.setAnimation(google.maps.Animation.BOUNCE);
+        setTimeout(function () {
             item.marker.setAnimation(null);
-        } else {
-            item.marker.setAnimation(google.maps.Animation.BOUNCE);
-            generateContentString(item, map);
-        }
+        }, 1400);
+        generateContentString(item, map);
     };
     /*
      * Google map API initialize.
@@ -86,17 +88,13 @@ function ViewModel() {
         self.markerArray = [];
         //Creates the marker for each item in the tacoPlace() array.
         var tacoPlaceLength = self.tacoPlace().length;
+
         for (var i = 0; i < tacoPlaceLength; i++) {
             var tacoPlace = self.tacoPlace()[i];
             var marker = new google.maps.Marker({
                 position: new google.maps.LatLng(tacoPlace.lat, tacoPlace.long),
                 title: tacoPlace.name
             });
-            // Declares the info window for each taco place.
-            tacoPlace.infoWindow = new google.maps.InfoWindow({
-                content: content
-            });
-            var content = "";
             //Each marker is placed into array for later use.
             self.markerArray.push(marker);
             tacoPlace.marker = marker;
@@ -108,6 +106,11 @@ function ViewModel() {
         //Adds onClick listener for each marker. 
         self.tacoPlace().forEach(function (item) {
             google.maps.event.addListener(item.marker, 'click', function () {
+                //bounces the marker when clicked on.
+                item.marker.setAnimation(google.maps.Animation.BOUNCE);
+                setTimeout(function () {
+                    item.marker.setAnimation(null);
+                }, 1400);
                 //Sends each item(tacoPlace) to generateContentString with all its info
                 generateContentString(item, map);
             });
@@ -182,8 +185,8 @@ var generateContentString = function (item, map) {
                     '<h3> Phone: ' + results.businesses[0].phone + '</h3>' +
                     '<h3> Address: ' + results.businesses[0].location.display_address + '</h3>' +
                     '</div>';
-            item.infoWindow.setContent(contentString);
-            item.infoWindow.open(map, item.marker);
+            infoWindow.setContent(contentString);
+            infoWindow.open(map, item.marker);
         },
         error: function () {
             console.log("doesnt work");
