@@ -88,7 +88,6 @@ function ViewModel() {
         self.markerArray = [];
         //Creates the marker for each item in the tacoPlace() array.
         var tacoPlaceLength = self.tacoPlace().length;
-
         for (var i = 0; i < tacoPlaceLength; i++) {
             var tacoPlace = self.tacoPlace()[i];
             var marker = new google.maps.Marker({
